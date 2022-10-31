@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthRegistrar;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class GetDetails extends AppCompatActivity {
 
@@ -46,8 +44,21 @@ public class GetDetails extends AppCompatActivity {
 
                 }else{
                     System.out.println("qwerty"+nameEt.getText().toString()+"\t"+lastNameEt.getText().toString());
-                    //fireStore need to
+                    String name=nameEt.getText().toString()+" "+lastNameEt.getText().toString();
+                    getData(name);
                 }
+            }
+        });
+    }
+    void getData(String name){
+        Map<String,Object> user=new HashMap();
+        user.put("Name",name);
+        user.put("mobile",mobile);
+
+        userDetails.collection("users").document(mobile).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(GetDetails.this, "Data added", Toast.LENGTH_SHORT).show();
             }
         });
     }
