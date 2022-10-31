@@ -29,6 +29,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
         android:background="@drawable/next_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

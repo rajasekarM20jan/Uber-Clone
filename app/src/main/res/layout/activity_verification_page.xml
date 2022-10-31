@@ -44,10 +44,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/next_button"
+        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:drawableRight="@drawable/next"
-        android:text="Next"
+        android:text="Verify"
         android:layout_margin="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

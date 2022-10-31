@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".GetDetails">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+        android:text="Enter Your Name"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nameET"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="240dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:elevation="10dp"
+        android:textSize="16sp"
+        android:shadowColor="@color/black"
+        android:background="@drawable/edit_text"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:maxLines="1"
+        />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+        android:text="Select Your Gender"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameET" />
+    <RadioGroup
+        android:id="@+id/genderRg"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/nameET"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="50dp"
+        >
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:buttonTint="@color/black"
+            android:textColor="@color/black"
+            android:id="@+id/maleRb"
+            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:buttonTint="@color/black"
+            android:textColor="@color/black"
+            android:id="@+id/femaleRb"
+            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:text="Prefer Not to disclose"
+            android:id="@+id/notToSayRb"
+            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
+
+    </RadioGroup>
+
+    <android.widget.Button
+        android:id="@+id/submitDetails"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@drawable/next_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+        android:text="Submit"
+        android:layout_margin="30dp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
