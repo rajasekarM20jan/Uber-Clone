@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class VerificationPage extends AppCompatActivity {
     EditText pinEt;
     Button verify;
     String vID;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class VerificationPage extends AppCompatActivity {
         verify=findViewById(R.id.verify);
         phoneAuth= FirebaseAuth.getInstance();
         Intent intent=getIntent();
-        String phone=intent.getStringExtra("phone");
+        phone=intent.getStringExtra("phone");
         sendCode(phone);
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,9 +52,9 @@ public class VerificationPage extends AppCompatActivity {
         });
     }
 
-    void sendCode(String phone){
+    void sendCode(String phoneNumber){
         PhoneAuthOptions opt= PhoneAuthOptions.newBuilder(phoneAuth)
-                .setPhoneNumber(phone)
+                .setPhoneNumber(phoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
                 .setActivity(this)
                 .setCallbacks(phoneCallback)
@@ -90,9 +92,11 @@ public class VerificationPage extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    AlertDialog.Builder alert= new AlertDialog.Builder(VerificationPage.this);
-                    alert.setMessage("Verification Successful");
-                    alert.show();
+                    SharedPreferences sp=getSharedPreferences("MyMobile",MODE_PRIVATE);
+                    SharedPreferences.Editor editor= sp.edit();
+                    editor.putString("mobile",phone);
+                    editor.commit();
+                    sendToDetailsPage();
                 }else{
                     AlertDialog.Builder alert= new AlertDialog.Builder(VerificationPage.this);
                     alert.setMessage("Verification Failed");
@@ -101,5 +105,8 @@ public class VerificationPage extends AppCompatActivity {
             }
         });
     }
-
+void sendToDetailsPage(){
+        Intent i=new Intent(VerificationPage.this,GetDetails.class);
+        startActivity(i);
+    }
 }
