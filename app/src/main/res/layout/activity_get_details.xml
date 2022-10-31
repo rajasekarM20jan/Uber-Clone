@@ -12,9 +12,9 @@
         android:layout_width="248dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="210dp"
         android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-        android:text="Enter Your Name"
+        android:text="First Name"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,45 +43,27 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-        android:text="Select Your Gender"
+        android:text="Last Name"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameET" />
-    <RadioGroup
-        android:id="@+id/genderRg"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/nameET"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="70dp"
-        android:layout_marginStart="50dp"
-        >
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Male"
-            android:buttonTint="@color/black"
-            android:textColor="@color/black"
-            android:id="@+id/maleRb"
-            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Female"
-            android:buttonTint="@color/black"
-            android:textColor="@color/black"
-            android:id="@+id/femaleRb"
-            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:buttonTint="@color/black"
-            android:text="Prefer Not to disclose"
-            android:id="@+id/notToSayRb"
-            android:fontFamily="@font/alegreya_sans_sc_bold_italic"/>
-
-    </RadioGroup>
+    <EditText
+        android:id="@+id/lastNameET"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="350dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:elevation="10dp"
+        android:textSize="16sp"
+        android:shadowColor="@color/black"
+        android:background="@drawable/edit_text"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:maxLines="1"
+        />
 
     <android.widget.Button
         android:id="@+id/submitDetails"
