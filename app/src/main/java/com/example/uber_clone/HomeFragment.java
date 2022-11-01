@@ -2,6 +2,8 @@ package com.example.uber_clone;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentContainerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -25,10 +28,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 
 public class HomeFragment extends Fragment {
 
     SupportMapFragment myMap;
+    SearchView searchView;
     FusedLocationProviderClient client;
 
     @Override
@@ -37,6 +46,7 @@ public class HomeFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        searchView=view.findViewById(R.id.searchViewHome);
         myMap=(SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.googleMap);
 
 
@@ -62,12 +72,38 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-
-
-
-
-
         }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Geocoder geocoder=new Geocoder(view.getContext(), Locale.getDefault());
+                try {
+                    List<Address> addressList= geocoder.getFromLocationName(s,1);
+                    double lat=addressList.get(0).getLatitude();
+                    double lon=addressList.get(0).getLongitude();
+                    LatLng loc1= new LatLng(lat,lon);
+                    MarkerOptions opt1=new MarkerOptions().position(loc1);
+                    myMap.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(@NonNull GoogleMap googleMap) {
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc1,15));
+                            googleMap.addMarker(opt1);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         return view;
     }
 

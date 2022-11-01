@@ -61,7 +61,8 @@ public class VerificationPage extends AppCompatActivity {
                 .build();
         PhoneAuthProvider.verifyPhoneNumber(opt);
     }
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks phoneCallback=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks phoneCallback=
+            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
