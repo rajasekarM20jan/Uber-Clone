@@ -1,6 +1,7 @@
 package com.example.uber_clone;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,11 +11,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -23,13 +24,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,16 +39,18 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     SupportMapFragment myMap;
-    SearchView searchView;
+    View view;
     FusedLocationProviderClient client;
+    LatLng loc;
+    Button next;
+    MarkerOptions opt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        searchView=view.findViewById(R.id.searchViewHome);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        next=view.findViewById(R.id.buttonToDestination);
         myMap=(SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.googleMap);
 
 
@@ -63,10 +67,11 @@ public class HomeFragment extends Fragment {
                             public void onMapReady(@NonNull GoogleMap googleMap) {
                                 double lat=location.getLatitude();
                                 double lon=location.getLongitude();
-                                LatLng loc= new LatLng(lat,lon);
-                                MarkerOptions opt=new MarkerOptions().position(loc);
+                                loc= new LatLng(lat,lon);
+                                opt=new MarkerOptions().position(loc);
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
                                 googleMap.addMarker(opt);
+                                googleMap.setPadding(10,10,10,10);
                             }
                         });
                     }
@@ -74,38 +79,22 @@ public class HomeFragment extends Fragment {
             });
         }
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                Geocoder geocoder=new Geocoder(view.getContext(), Locale.getDefault());
-                try {
-                    List<Address> addressList= geocoder.getFromLocationName(s,1);
-                    double lat=addressList.get(0).getLatitude();
-                    double lon=addressList.get(0).getLongitude();
-                    LatLng loc1= new LatLng(lat,lon);
-                    MarkerOptions opt1=new MarkerOptions().position(loc1);
-                    myMap.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull GoogleMap googleMap) {
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc1,15));
-                            googleMap.addMarker(opt1);
-                        }
-                    });
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public void onClick(View view) {
+                Intent i=new Intent(view.getContext(),SetDestinationPage.class);
+                startActivity(i);
             }
         });
 
+
+
+
+
+
+
         return view;
+
+
     }
-
-
 }

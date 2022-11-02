@@ -6,40 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".ServicesFragment">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/black"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginStart="190dp"
-        android:gravity="center"
-        android:text="UBER"
-        android:textColor="@color/white"
-        android:textSize="18sp"
+        android:layout_margin="25dp"
+        android:text="Services"
+        android:textColor="@color/black"
+        android:textSize="26sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="25dp"
+        android:text="Go AnyWhere, Get Anything..."
+        android:textColor="@color/black"
+        android:textSize="18sp"/>
 
     <android.widget.Button
         android:layout_width="150dp"
         android:layout_height="100dp"
+        android:background="@drawable/background"
         android:layout_marginTop="150dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="20dp"
         android:text="Ride"/>
 
     <android.widget.Button
         android:layout_width="150dp"
         android:layout_height="100dp"
+        android:background="@drawable/background"
         android:layout_marginTop="150dp"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="190dp"
         android:text="Rental"/>
     <android.widget.Button
         android:layout_width="320dp"
         android:layout_height="100dp"
+        android:background="@drawable/background"
         android:layout_marginTop="280dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="20dp"
         android:text="Package"/>
 
 </FrameLayout>

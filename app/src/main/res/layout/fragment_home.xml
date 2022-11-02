@@ -7,30 +7,264 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <SearchView
-            android:id="@+id/searchViewHome"
+
+
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="60dp"
+    android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            />
+            android:orientation="vertical"
+            >
 
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/googleMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
-    </LinearLayout>
-    </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/linearbg"
+                    android:layout_margin="20dp"
+                    android:orientation="horizontal">
+                        <android.widget.Button
+                            android:id="@+id/buttonToDestination"
+                            android:layout_width="wrap_content"
+                            android:drawableStart="@drawable/search"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:text="Where to?"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:drawablePadding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="40dp"
+                            />
+
+                        <android.widget.Button
+                            android:id="@+id/buttonToTimer"
+                            android:layout_width="wrap_content"
+                            android:drawableStart="@drawable/time1"
+                            android:background="@drawable/timer_button"
+                            android:text="Now"
+                            android:drawableEnd="@drawable/down"
+                            android:textColor="@color/black"
+                            android:drawablePadding="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginEnd="10dp"
+                            />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suggestions"
+                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="30dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:orientation="horizontal">
+                        <android.widget.Button
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:background="@drawable/background"
+                            android:layout_margin="10dp"
+                            />
+                        <android.widget.Button
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:background="@drawable/background"
+                            android:layout_margin="10dp"
+                            />
+                        <android.widget.Button
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:text="View All"
+                            android:background="@drawable/background"
+                            android:layout_margin="10dp"
+                            />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fillers1"
+                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="30dp"
+                    />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_margin="10dp"
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                        </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fillers2"
+                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="30dp"
+                    />
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                        </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fillers3"
+                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="30dp"
+                    />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                                <ImageView
+                                    android:layout_width="140dp"
+                                    android:layout_height="100dp"
+                                    android:layout_margin="10dp"
+                                    android:src="@drawable/images"
+                                    />
+                        </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AROUND YOU"
+                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="30dp"
+                    />
+
+                <fragment
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/googleMap"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                />
+        </LinearLayout>
+</ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
