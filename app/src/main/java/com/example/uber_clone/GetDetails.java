@@ -38,7 +38,6 @@ public class GetDetails extends AppCompatActivity {
     SharedPreferences sp;
     String mobile,longitude,latitude;
     FusedLocationProviderClient flClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

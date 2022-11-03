@@ -19,11 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
 public class VerificationPage extends AppCompatActivity {
     FirebaseAuth phoneAuth;
+    FirebaseFirestore userVerify;
     EditText pinEt;
     Button verify;
     String vID;
@@ -97,7 +100,8 @@ public class VerificationPage extends AppCompatActivity {
                     SharedPreferences.Editor editor= sp.edit();
                     editor.putString("mobile",phone);
                     editor.commit();
-                    sendToDetailsPage();
+                    checkUser();
+
                 }else{
                     AlertDialog.Builder alert= new AlertDialog.Builder(VerificationPage.this);
                     alert.setMessage("Verification Failed");
@@ -106,6 +110,44 @@ public class VerificationPage extends AppCompatActivity {
             }
         });
     }
+void checkUser(){
+        userVerify=FirebaseFirestore.getInstance();
+        try{
+            userVerify.collection("users").document(phone).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        System.out.println("qwertyuiop : " + task.getResult());
+                        try {
+                            DocumentSnapshot doc = task.getResult();
+                            System.out.println("qwertyuiop : " + doc.get("mobile"));
+                            String mobile = (String) doc.get("mobile");
+                            if (mobile.equals(phone)) {
+                                getToDashboard();
+                            }
+                        }catch(Exception e){
+                                sendToDetailsPage();
+                        }
+
+                    }else{
+                        System.out.println("qwertyuiop : no data found");
+                    }
+                }
+            });
+
+
+
+        }catch (Exception e){
+            System.out.println("qwertyuiop  : No user found with id"+phone);
+        }
+
+}
+
+void getToDashboard(){
+    Intent i=new Intent(VerificationPage.this,DashBoard.class);
+    startActivity(i);
+}
+
 void sendToDetailsPage(){
         Intent i=new Intent(VerificationPage.this,GetDetails.class);
         startActivity(i);
