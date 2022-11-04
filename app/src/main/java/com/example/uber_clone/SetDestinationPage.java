@@ -127,6 +127,13 @@ public class SetDestinationPage extends AppCompatActivity {
         searchViewFrom.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
                 Geocoder geocoder=new Geocoder(SetDestinationPage.this, Locale.getDefault());
                 try {
                     List<Address> addressList= geocoder.getFromLocationName(s,1);
@@ -138,13 +145,7 @@ public class SetDestinationPage extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
                 return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
             }
         });
 
