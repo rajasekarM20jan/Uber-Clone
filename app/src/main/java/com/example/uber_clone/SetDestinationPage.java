@@ -1,10 +1,14 @@
 package com.example.uber_clone;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Address;
@@ -49,20 +53,41 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class SetDestinationPage extends AppCompatActivity {
-    SearchView searchView;
-
+    SearchView searchView,searchViewFrom;
+    ArrayList<LatLng> points;
     LatLng loc,loc1;
+    int price;
+    TextView backInDest;
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
-    PolylineOptions options=null;
     FusedLocationProviderClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_destination_page);
         myMap= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInDestination);
-
+        backInDest=findViewById(R.id.backInDest);
         searchView=findViewById(R.id.searchViewDestination);
+        searchViewFrom=findViewById(R.id.searchViewFrom);
+        Intent intent=getIntent();
+        String type=intent.getStringExtra("type");
+
+        switch(type){
+            case "ride":{
+                price=30;
+                break;
+            }
+            case "rental":{
+                price=13;
+                break;
+            }
+            case "parcel":{
+                price=50;
+                break;
+            }
+        }
+
+
 
         client= LocationServices.getFusedLocationProviderClient(SetDestinationPage.this);
 
@@ -83,6 +108,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                 opt=new MarkerOptions().position(loc);
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
                                 googleMap.addMarker(opt);
+                                searchViewFrom.setQuery(String.valueOf(opt),false);
                             }
                         });
                     }
@@ -90,6 +116,37 @@ public class SetDestinationPage extends AppCompatActivity {
             });
         }
 
+
+        backInDest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        searchViewFrom.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Geocoder geocoder=new Geocoder(SetDestinationPage.this, Locale.getDefault());
+                try {
+                    List<Address> addressList= geocoder.getFromLocationName(s,1);
+                    double lat=addressList.get(0).getLatitude();
+                    double lon=addressList.get(0).getLongitude();
+                    loc= new LatLng(lat,lon);
+                    opt=new MarkerOptions().position(loc);
+                    searchViewFrom.clearFocus();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -163,57 +220,63 @@ public class SetDestinationPage extends AppCompatActivity {
                             System.out.println("MyLocations5 : "+arr);
                             JSONArray routes=arr.getJSONArray("routes");
 
-                            ArrayList<LatLng> points;
+
 
 
                             for(int i=0;i<routes.length();i++){
                                 points=new ArrayList<>();
-                                options=new PolylineOptions();
 
                                 JSONArray legs= routes.getJSONObject(i).getJSONArray("legs");
-
-                                System.out.println("MyLocations legs : "+legs);
 
                                 for(int j=0;j<legs.length();j++){
 
                                     JSONArray steps=legs.getJSONObject(j).getJSONArray("steps");
-                                    System.out.println("MyLocations steps : "+steps);
 
                                     for(int k=0;k<steps.length();k++){
-                                        System.out.println("MyLocations poly-1 : "+steps.getJSONObject(k).getJSONObject("polyline"));
                                         String polyLine= steps.getJSONObject(k).getJSONObject("polyline").getString("points");
 
                                         List<LatLng> list= decodePoly(polyLine);
-                                        System.out.println("MyLocations list : "+list);
 
                                         for(int l=0;l<list.size();l++){
                                             LatLng position=new LatLng((list.get(l).latitude),(list.get(l).longitude));
                                             points.add(position);
-                                            System.out.println("MyLocations Position : "+points);
-                                            System.out.println("MyLocations points : "+points);
+
                                         }
-                                        options.addAll(points);
-                                        options.width(10);
-                                        options.color(R.color.black);
-                                        options.geodesic(true);
+
 
                                     }
                                     myMap.getMapAsync(new OnMapReadyCallback() {
                                         @Override
                                         public void onMapReady(@NonNull GoogleMap googleMap) {
-                                            System.out.println("MyLocations points2 : "+options.getPoints());
+
+                                            ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
+                                            progressDialog.setMessage("Please wait while we fetch the navigation routes...");
+                                            progressDialog.setCancelable(false);
+                                            progressDialog.show();
+
+
                                             googleMap.clear();
 
                                             googleMap.addMarker(opt);
                                             googleMap.addMarker(opt1);
 
-                                            googleMap.addPolyline(options);
+                                            int myCount= points.size();
+                                            System.out.println("My Points Count : "+myCount);
+
+                                            if(myCount<=2000){
+                                                googleMap.addPolyline(new PolylineOptions().addAll(points));
+                                            }
+                                            else{
+                                                googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
+                                            }
+
 
                                             LatLngBounds bounds=new LatLngBounds.Builder().include(loc).include(loc1).build();
                                             Point pt=new Point();
                                             getWindowManager().getDefaultDisplay().getSize(pt);
-                                            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,150,30));
+                                            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
 
+                                            progressDialog.dismiss();
 
 
                                         }
@@ -237,6 +300,21 @@ public class SetDestinationPage extends AppCompatActivity {
 
         });
 
+        Location startPoint=new Location("location A");
+        startPoint.setLatitude(loc.latitude);
+        startPoint.setLongitude(loc.longitude);
+
+        Location endPoint=new Location("Location B");
+        endPoint.setLongitude(loc1.longitude);
+        endPoint.setLatitude(loc1.latitude);
+
+        float distance= (int) startPoint.distanceTo(endPoint);
+
+        System.out.println("My Locations distance : "+ (distance/1000)+"\t"+price);
+
+        float totalFare= price*(distance/1000);
+
+        System.out.println("My Locations distance and Price : "+ (distance/1000)+"\t Price :"+totalFare);
 
 
 
@@ -276,5 +354,10 @@ public class SetDestinationPage extends AppCompatActivity {
 
         }
         return poly;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

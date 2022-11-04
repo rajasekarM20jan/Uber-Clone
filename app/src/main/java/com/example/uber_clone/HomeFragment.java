@@ -3,8 +3,6 @@ package com.example.uber_clone;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,16 +21,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 
 public class HomeFragment extends Fragment {
@@ -42,7 +32,7 @@ public class HomeFragment extends Fragment {
     View view;
     FusedLocationProviderClient client;
     LatLng loc;
-    Button next;
+    Button searchDest;
     MarkerOptions opt;
 
     @Override
@@ -50,7 +40,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        next=view.findViewById(R.id.buttonToDestination);
+        searchDest =view.findViewById(R.id.buttonToDestination);
         myMap=(SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.googleMap);
 
 
@@ -79,10 +69,11 @@ public class HomeFragment extends Fragment {
             });
         }
 
-        next.setOnClickListener(new View.OnClickListener() {
+        searchDest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(view.getContext(),SetDestinationPage.class);
+                i.putExtra("type","ride");
                 startActivity(i);
             }
         });

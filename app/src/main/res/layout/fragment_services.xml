@@ -27,6 +27,7 @@
         android:textSize="18sp"/>
 
     <android.widget.Button
+        android:id="@+id/rideButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:background="@drawable/background"
@@ -35,6 +36,7 @@
         android:text="Ride"/>
 
     <android.widget.Button
+        android:id="@+id/rentalButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:background="@drawable/background"
@@ -42,6 +44,7 @@
         android:layout_marginStart="190dp"
         android:text="Rental"/>
     <android.widget.Button
+        android:id="@+id/packageButton"
         android:layout_width="320dp"
         android:layout_height="100dp"
         android:background="@drawable/background"
