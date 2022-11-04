@@ -275,7 +275,6 @@ public class SetDestinationPage extends AppCompatActivity {
                                             Point pt=new Point();
                                             getWindowManager().getDefaultDisplay().getSize(pt);
                                             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
-
                                             progressDialog.dismiss();
 
 
