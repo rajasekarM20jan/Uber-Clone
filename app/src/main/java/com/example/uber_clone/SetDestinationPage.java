@@ -3,6 +3,7 @@ package com.example.uber_clone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -17,6 +18,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
@@ -56,8 +58,9 @@ public class SetDestinationPage extends AppCompatActivity {
     SearchView searchView,searchViewFrom;
     ArrayList<LatLng> points;
     LatLng loc,loc1;
-    int price;
-    TextView backInDest;
+    ConstraintLayout carDetails;
+    int price,priceForXL;
+    TextView backInDest,priceForIntercity,priceForXLIntercity,backInCarDetails;
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
     FusedLocationProviderClient client;
@@ -67,22 +70,29 @@ public class SetDestinationPage extends AppCompatActivity {
         setContentView(R.layout.activity_set_destination_page);
         myMap= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInDestination);
         backInDest=findViewById(R.id.backInDest);
+        backInCarDetails=findViewById(R.id.backInCarDetails);
+        priceForIntercity=findViewById(R.id.priceForIntercity);
+        priceForXLIntercity=findViewById(R.id.priceForXLIntercity);
         searchView=findViewById(R.id.searchViewDestination);
+        carDetails=findViewById(R.id.carDetails);
         searchViewFrom=findViewById(R.id.searchViewFrom);
         Intent intent=getIntent();
         String type=intent.getStringExtra("type");
 
         switch(type){
             case "ride":{
-                price=30;
+                price=25;
+                priceForXL=40;
                 break;
             }
             case "rental":{
                 price=13;
+                priceForXL=20;
                 break;
             }
             case "parcel":{
-                price=50;
+                price=20;
+                priceForXL=40;
                 break;
             }
         }
@@ -128,8 +138,8 @@ public class SetDestinationPage extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-
-                return false;
+                searchViewFrom.clearFocus();
+                return true;
             }
 
             @Override
@@ -141,7 +151,7 @@ public class SetDestinationPage extends AppCompatActivity {
                     double lon=addressList.get(0).getLongitude();
                     loc= new LatLng(lat,lon);
                     opt=new MarkerOptions().position(loc);
-                    searchViewFrom.clearFocus();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -310,14 +320,31 @@ public class SetDestinationPage extends AppCompatActivity {
 
         float distance= (int) startPoint.distanceTo(endPoint);
 
-        System.out.println("My Locations distance : "+ (distance/1000)+"\t"+price);
-
         float totalFare= price*(distance/1000);
 
+        float totalFareXL=priceForXL*(distance/1000);
+
         System.out.println("My Locations distance and Price : "+ (distance/1000)+"\t Price :"+totalFare);
+        System.out.println("My Locations distance and Price For XL : "+ (distance/1000)+"\t Price :"+totalFareXL);
+
+        priceForIntercity.setText("₹"+(int)totalFare);
+        priceForXLIntercity.setText("₹"+(int)totalFareXL);
+
+        final Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                carDetails.setVisibility(View.VISIBLE);
+            }
+        },3000);
 
 
-
+        backInCarDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carDetails.setVisibility(View.GONE);
+            }
+        });
 
 
 
