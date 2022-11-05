@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -335,13 +336,16 @@ public class SetDestinationPage extends AppCompatActivity {
             @Override
             public void run() {
                 carDetails.setVisibility(View.VISIBLE);
+                carDetails.setAnimation(AnimationUtils.loadAnimation(SetDestinationPage.this,R.anim.down));
             }
-        },3000);
+        },2000);
 
 
         backInCarDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                carDetails.setAnimation(AnimationUtils.loadAnimation(SetDestinationPage.this,R.anim.gone));
+
                 carDetails.setVisibility(View.GONE);
             }
         });
