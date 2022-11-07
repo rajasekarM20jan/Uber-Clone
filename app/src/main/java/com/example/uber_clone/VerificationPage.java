@@ -42,6 +42,7 @@ public class VerificationPage extends AppCompatActivity {
         Intent intent=getIntent();
         phone=intent.getStringExtra("phone");
         sendCode(phone);
+        System.out.println("CODE SENT");
         verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,14 +64,17 @@ public class VerificationPage extends AppCompatActivity {
                 .setCallbacks(phoneCallback)
                 .build();
         PhoneAuthProvider.verifyPhoneNumber(opt);
+        System.out.println("CODE SENT2");
     }
     PhoneAuthProvider.OnVerificationStateChangedCallbacks phoneCallback=
             new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
 
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             vID=s;
+
         }
 
         @Override
@@ -88,10 +92,12 @@ public class VerificationPage extends AppCompatActivity {
         }
     };
     void verifyCode(String code){
+        System.out.println("CODE SENT3");
         PhoneAuthCredential cred=PhoneAuthProvider.getCredential(vID,code);
         signIn(cred);
     }
     void signIn(PhoneAuthCredential cred){
+        System.out.println("CODE SENT1234");
         phoneAuth.signInWithCredential(cred).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

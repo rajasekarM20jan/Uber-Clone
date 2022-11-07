@@ -1,9 +1,11 @@
 package com.example.uber_clone;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class DashBoard extends AppCompatActivity {
+    Fragment frag=null;
     BottomNavigationView btmView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class DashBoard extends AppCompatActivity {
         btmView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment frag=null;
+
                 switch (item.getItemId()){
                     case R.id.homeButton:{
                         frag=new HomeFragment();
@@ -55,5 +58,28 @@ public class DashBoard extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(frag==new HomeFragment()){
+            AlertDialog.Builder exit=new AlertDialog.Builder(DashBoard.this);
+            exit.setMessage("Are you Sure about to exit the application");
+            exit.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            exit.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finishAffinity();
+                }
+            });
+        }else{
+            frag=new HomeFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashBoard,frag).commit();
+        }
     }
 }

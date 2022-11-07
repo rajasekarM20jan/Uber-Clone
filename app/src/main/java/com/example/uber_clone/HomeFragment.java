@@ -77,15 +77,6 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
-
-
-
-
-
-
-
         return view;
-
-
     }
 }

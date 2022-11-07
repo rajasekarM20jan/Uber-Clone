@@ -85,6 +85,8 @@ public class GetDetails extends AppCompatActivity {
                             user.put("mobile",mobile);
                             user.put("longitude",longitude);
                             user.put("latitude",latitude);
+                            user.put("displayPicture","");
+                            user.put("wallet","0");
 
                             userDetails.collection("users").document(mobile).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
