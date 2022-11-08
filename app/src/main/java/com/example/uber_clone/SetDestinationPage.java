@@ -18,6 +18,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -128,6 +129,21 @@ public class SetDestinationPage extends AppCompatActivity {
                                 opt=new MarkerOptions().position(loc);
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
                                 googleMap.addMarker(opt);
+                                        for(int i=0;i<locationOfDrivers.size();i++) {
+                                            try {
+                                                ArrayList locations = (ArrayList) locationOfDrivers.get(i);
+                                                String a = (String) locations.get(0);
+                                                String b = (String) locations.get(1);
+                                                double latitudeOfDriver = Double.parseDouble(a);
+                                                double longitudeOfDriver = Double.parseDouble(b);
+                                                LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
+                                                MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
+                                                myDriverOpt.title("Driver");
+                                                googleMap.addMarker(myDriverOpt);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
                                 searchViewFrom.setQuery(String.valueOf(opt),false);
                             }
                         });
@@ -169,6 +185,35 @@ public class SetDestinationPage extends AppCompatActivity {
             }
         });
 
+        driverLocationFetcher.collection("drivers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+
+                for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                    System.out.println("DriverData Size : " + queryDocumentSnapshots.size());
+                    System.out.println("DriverData : " + queryDocumentSnapshots.getDocuments().get(i).getData());
+                    drivers.add(queryDocumentSnapshots.getDocuments().get(i).getData());
+                }
+                for(int j=0;j<drivers.size();j++){
+                    ArrayList d=new ArrayList<>();
+                    System.out.println("DriverData 2 : "+drivers.get(j).toString());
+                    HashMap hashMap= (HashMap) drivers.get(j);
+                    System.out.println("DriverData hash : "+hashMap.get("loginStatus"));
+                    if(hashMap.get("loginStatus").equals("Online")){
+
+                        String lat1= (String) hashMap.get("latitude");
+                        String lon1= (String) hashMap.get("longitude");
+                        d.add(lat1);
+                        d.add(lon1);
+                        System.out.println("DriverData Location d : "+d);
+                    }
+                    locationOfDrivers.add(d);
+                }
+                System.out.println("DriverData Location : "+locationOfDrivers);
+            }
+        });
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -193,51 +238,9 @@ public class SetDestinationPage extends AppCompatActivity {
                 return false;
             }
         });
-
-        driverLocationFetcher.collection("drivers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(int i=0;i< queryDocumentSnapshots.size();i++){
-                    System.out.println("DriverData Size : "+queryDocumentSnapshots.size());
-                    System.out.println("DriverData : "+queryDocumentSnapshots.getDocuments().get(i).getData());
-                    drivers.add(queryDocumentSnapshots.getDocuments().get(i).getData());
-                }
-
-                for(int j=0;j<drivers.size();j++){
-                    ArrayList d=new ArrayList<>();
-                    System.out.println("DriverData 2 : "+drivers.get(j).toString());
-                    HashMap hashMap= (HashMap) drivers.get(j);
-                    System.out.println("DriverData hash : "+hashMap.get("loginStatus"));
-                    if(hashMap.get("loginStatus").equals("Online")){
-
-                        String lat1= (String) hashMap.get("latitude");
-                        String lon1= (String) hashMap.get("longitude");
-
-                        d.add(lat1);
-                        d.add(lon1);
-                        System.out.println("DriverData Location d : "+d);
-
-
-
-                    }
-                    locationOfDrivers.add(d);
-
-                }
-                System.out.println("DriverData Location : "+locationOfDrivers);
-
-
-            }
-        });
-
-
-
-
-
-
     }
-
-
     void direction(){
+
         String location1=loc1.latitude+","+ loc1.longitude;
         String location=loc.latitude+","+loc.longitude;
         System.out.println("MyLocations : "+location+"\t"+location1);
@@ -409,11 +412,7 @@ public class SetDestinationPage extends AppCompatActivity {
                 carDetails.setVisibility(View.GONE);
             }
         });
-
-
-
     }
-
     private List<LatLng> decodePoly(String encoded){
         System.out.println("MyLocations polyline : "+encoded);
         List<LatLng> poly=new ArrayList<>();
@@ -446,7 +445,6 @@ public class SetDestinationPage extends AppCompatActivity {
         }
         return poly;
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
