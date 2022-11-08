@@ -77,6 +77,7 @@ public class DashBoard extends AppCompatActivity {
                     finishAffinity();
                 }
             });
+            exit.show();
         }else{
             frag=new HomeFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.dashBoard,frag).commit();

@@ -39,6 +39,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +49,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +69,8 @@ public class SetDestinationPage extends AppCompatActivity {
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
     FusedLocationProviderClient client;
+    FirebaseFirestore driverLocationFetcher;
+    ArrayList drivers,locationOfDrivers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +82,9 @@ public class SetDestinationPage extends AppCompatActivity {
         priceForXLIntercity=findViewById(R.id.priceForXLIntercity);
         searchView=findViewById(R.id.searchViewDestination);
         carDetails=findViewById(R.id.carDetails);
+        drivers=new ArrayList<>();
+        locationOfDrivers=new ArrayList<>();
+        driverLocationFetcher=FirebaseFirestore.getInstance();
         searchViewFrom=findViewById(R.id.searchViewFrom);
         Intent intent=getIntent();
         String type=intent.getStringExtra("type");
@@ -185,6 +194,41 @@ public class SetDestinationPage extends AppCompatActivity {
             }
         });
 
+        driverLocationFetcher.collection("drivers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(int i=0;i< queryDocumentSnapshots.size();i++){
+                    System.out.println("DriverData Size : "+queryDocumentSnapshots.size());
+                    System.out.println("DriverData : "+queryDocumentSnapshots.getDocuments().get(i).getData());
+                    drivers.add(queryDocumentSnapshots.getDocuments().get(i).getData());
+                }
+
+                for(int j=0;j<drivers.size();j++){
+                    ArrayList d=new ArrayList<>();
+                    System.out.println("DriverData 2 : "+drivers.get(j).toString());
+                    HashMap hashMap= (HashMap) drivers.get(j);
+                    System.out.println("DriverData hash : "+hashMap.get("loginStatus"));
+                    if(hashMap.get("loginStatus").equals("Online")){
+
+                        String lat1= (String) hashMap.get("latitude");
+                        String lon1= (String) hashMap.get("longitude");
+
+                        d.add(lat1);
+                        d.add(lon1);
+                        System.out.println("DriverData Location d : "+d);
+
+
+
+                    }
+                    locationOfDrivers.add(d);
+
+                }
+                System.out.println("DriverData Location : "+locationOfDrivers);
+
+
+            }
+        });
+
 
 
 
@@ -271,6 +315,22 @@ public class SetDestinationPage extends AppCompatActivity {
 
                                             googleMap.addMarker(opt);
                                             googleMap.addMarker(opt1);
+
+                                            for(int i=0;i<locationOfDrivers.size();i++){
+                                                try {
+                                                    ArrayList locations = (ArrayList) locationOfDrivers.get(i);
+                                                    String a = (String) locations.get(0);
+                                                    String b = (String) locations.get(1);
+                                                    double latitudeOfDriver = Double.parseDouble(a);
+                                                    double longitudeOfDriver = Double.parseDouble(b);
+                                                    LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
+                                                    MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
+                                                    myDriverOpt.title("Driver");
+                                                    googleMap.addMarker(myDriverOpt);
+                                                }catch(Exception e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
 
                                             int myCount= points.size();
                                             System.out.println("My Points Count : "+myCount);
