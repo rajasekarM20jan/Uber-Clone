@@ -320,6 +320,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                             googleMap.addMarker(opt1);
 
                                             for(int i=0;i<locationOfDrivers.size();i++){
+                                                System.out.println("Location Array Size : "+locationOfDrivers.size());
                                                 try {
                                                     ArrayList locations = (ArrayList) locationOfDrivers.get(i);
                                                     String a = (String) locations.get(0);
