@@ -297,23 +297,24 @@ public class SetDestinationPage extends AppCompatActivity {
                             System.out.println("MyLocations5 : "+arr);
                             JSONArray routes=arr.getJSONArray("routes");
 
-
-
-
                             for(int i=0;i<routes.length();i++){
+
                                 points=new ArrayList<>();
 
+
                                 JSONArray legs= routes.getJSONObject(i).getJSONArray("legs");
+                                System.out.println("MyLocations6 : ");
 
                                 for(int j=0;j<legs.length();j++){
 
                                     JSONArray steps=legs.getJSONObject(j).getJSONArray("steps");
+                                    System.out.println("MyLocations7 : ");
 
                                     for(int k=0;k<steps.length();k++){
                                         String polyLine= steps.getJSONObject(k).getJSONObject("polyline").getString("points");
 
                                         List<LatLng> list= decodePoly(polyLine);
-
+                                        System.out.println("MyLocations8 : ");
                                         for(int l=0;l<list.size();l++){
                                             LatLng position=new LatLng((list.get(l).latitude),(list.get(l).longitude));
                                             points.add(position);
@@ -322,60 +323,67 @@ public class SetDestinationPage extends AppCompatActivity {
 
 
                                     }
-                                    myMap.getMapAsync(new OnMapReadyCallback() {
-                                        @Override
-                                        public void onMapReady(@NonNull GoogleMap googleMap) {
-
-                                            ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
-                                            progressDialog.setMessage("Please wait while we fetch the navigation routes...");
-                                            progressDialog.setCancelable(false);
-                                            progressDialog.show();
-
-
-                                            googleMap.clear();
-
-                                            googleMap.addMarker(opt);
-                                            googleMap.addMarker(opt1);
-
-                                            for(int i=0;i<locationOfDrivers.size();i++){
-                                                System.out.println("Location Array Size : "+locationOfDrivers.size());
-                                                try {
-                                                    ArrayList locations = (ArrayList) locationOfDrivers.get(i);
-                                                    String a = (String) locations.get(0);
-                                                    String b = (String) locations.get(1);
-                                                    double latitudeOfDriver = Double.parseDouble(a);
-                                                    double longitudeOfDriver = Double.parseDouble(b);
-                                                    LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
-                                                    MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
-                                                    myDriverOpt.title("Driver");
-                                                    googleMap.addMarker(myDriverOpt);
-                                                }catch(Exception e){
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            int myCount= points.size();
-                                            System.out.println("My Points Count : "+myCount);
-
-                                            if(myCount<=2000){
-                                                googleMap.addPolyline(new PolylineOptions().addAll(points));
-                                            }
-                                            else{
-                                                googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
-                                            }
-
-
-                                            LatLngBounds bounds=new LatLngBounds.Builder().include(loc).include(loc1).build();
-                                            Point pt=new Point();
-                                            getWindowManager().getDefaultDisplay().getSize(pt);
-                                            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
-                                            progressDialog.dismiss();
-
-
-                                        }
-                                    });
+                                    //------------------------------------
 
                                 }
+                            }
+                            try{
+                                myMap.getMapAsync(new OnMapReadyCallback() {
+                                    @Override
+                                    public void onMapReady(@NonNull GoogleMap googleMap) {
+                                        System.out.println("Location Array Size : "+locationOfDrivers.size());
+
+                                        ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
+                                        progressDialog.setMessage("Please wait while we fetch the navigation routes...");
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+
+
+                                        googleMap.clear();
+
+                                        googleMap.addMarker(opt);
+                                        googleMap.addMarker(opt1);
+
+                                        for(int i=0;i<locationOfDrivers.size();i++){
+                                            System.out.println("Location Array Size : "+locationOfDrivers.size());
+                                            try {
+                                                ArrayList locations = (ArrayList) locationOfDrivers.get(i);
+                                                String a = (String) locations.get(0);
+                                                String b = (String) locations.get(1);
+                                                double latitudeOfDriver = Double.parseDouble(a);
+                                                double longitudeOfDriver = Double.parseDouble(b);
+                                                LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
+                                                MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
+                                                myDriverOpt.title("Driver");
+                                                googleMap.addMarker(myDriverOpt);
+                                            }catch(Exception e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        int myCount= points.size();
+                                        System.out.println("My Points Count : "+myCount);
+
+                                        if(myCount<=2000){
+                                            googleMap.addPolyline(new PolylineOptions().addAll(points));
+                                        }
+                                        else{
+                                            googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
+                                        }
+
+
+                                        LatLngBounds bounds=new LatLngBounds.Builder().include(loc).include(loc1).build();
+                                        Point pt=new Point();
+                                        getWindowManager().getDefaultDisplay().getSize(pt);
+                                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
+                                        progressDialog.dismiss();
+
+
+                                    }
+                                });
+
+                            }catch(Exception e){
+                                e.printStackTrace();
                             }
 
                         } catch (JSONException e) {
@@ -385,6 +393,10 @@ public class SetDestinationPage extends AppCompatActivity {
                     }
 
                 });
+
+
+
+
                 }
                 else{
                     System.out.println("MyLocations2 : "+url);
@@ -470,8 +482,9 @@ public class SetDestinationPage extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
 
-                        carDetails.setVisibility(View.GONE);
-                        Toast.makeText(SetDestinationPage.this, "Please Wait while we assign a cab for you", Toast.LENGTH_SHORT).show();
+                        Intent intent =new Intent(SetDestinationPage.this,RidePage.class);
+                        intent.putExtra("rideID",Integer.toString(rideId));
+                        startActivity(intent);
                     }
                 });
             }
@@ -501,6 +514,8 @@ public class SetDestinationPage extends AppCompatActivity {
                 ride.put("rideTime",my_time);
                 ride.put("riderNumber",phone);
                 ride.put("rideStatus","0");
+                ride.put("pickUp",loc);
+                ride.put("drop",loc1);
                 ride.put("carType","xlIntercity");
                 ride.put("driverAssigned","no");
                 ride.put("driverName","");
@@ -511,8 +526,9 @@ public class SetDestinationPage extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
 
-                        carDetails.setVisibility(View.GONE);
-                        Toast.makeText(SetDestinationPage.this, "Please Wait while we assign a cab for you", Toast.LENGTH_SHORT).show();
+                        Intent intent =new Intent(SetDestinationPage.this,RidePage.class);
+                        intent.putExtra("rideID",Integer.toString(rideId));
+                        startActivity(intent);
                     }
                 });
 
@@ -524,7 +540,6 @@ public class SetDestinationPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 carDetails.setAnimation(AnimationUtils.loadAnimation(SetDestinationPage.this,R.anim.gone));
-
                 carDetails.setVisibility(View.GONE);
             }
         });
