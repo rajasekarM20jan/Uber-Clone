@@ -422,6 +422,8 @@ public class SetDestinationPage extends AppCompatActivity {
             }
         },2000);
 
+
+
         intercity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -448,6 +450,15 @@ public class SetDestinationPage extends AppCompatActivity {
                 ride.put("pickUp",loc);
                 ride.put("drop",loc1);
                 ride.put("riderNumber",phone);
+                /*
+                    Ride Status:
+                        0- Not Assigned
+                        1- Assigned
+                        2- Started
+                        3- Payment Complete
+                        4- Ride Complete
+                       -1- Cancelled
+                */
                 ride.put("rideStatus","0");
                 ride.put("carType","intercity");
                 ride.put("driverAssigned","no");
