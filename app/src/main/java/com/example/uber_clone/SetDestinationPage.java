@@ -3,13 +3,16 @@ package com.example.uber_clone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Address;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -49,10 +53,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -64,13 +71,19 @@ public class SetDestinationPage extends AppCompatActivity {
     SearchView searchView,searchViewFrom;
     ArrayList<LatLng> points;
     LatLng loc,loc1;
+    int previousRideId,rideId;
+    float totalFare,totalFareXL;
+    CardView intercity,xlIntercity;
     ConstraintLayout carDetails;
     int price,priceForXL;
+    SharedPreferences sp;
     TextView backInDest,priceForIntercity,priceForXLIntercity,backInCarDetails;
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
+    String phone;
+    Location startPoint,endPoint;
     FusedLocationProviderClient client;
-    FirebaseFirestore driverLocationFetcher;
+    FirebaseFirestore driverLocationFetcher,rideData;
     ArrayList drivers,locationOfDrivers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +94,15 @@ public class SetDestinationPage extends AppCompatActivity {
         backInCarDetails=findViewById(R.id.backInCarDetails);
         priceForIntercity=findViewById(R.id.priceForIntercity);
         priceForXLIntercity=findViewById(R.id.priceForXLIntercity);
+        intercity=findViewById(R.id.cardViewForIntercity);
+        xlIntercity=findViewById(R.id.cardViewForXLIntercity);
         searchView=findViewById(R.id.searchViewDestination);
         carDetails=findViewById(R.id.carDetails);
         drivers=new ArrayList<>();
+        sp=getSharedPreferences("MyMobile", Context.MODE_PRIVATE);
+        phone=sp.getString("mobile","numberNotFound");
         locationOfDrivers=new ArrayList<>();
+        rideData=FirebaseFirestore.getInstance();
         driverLocationFetcher=FirebaseFirestore.getInstance();
         searchViewFrom=findViewById(R.id.searchViewFrom);
         Intent intent=getIntent();
@@ -375,19 +393,19 @@ public class SetDestinationPage extends AppCompatActivity {
 
         });
 
-        Location startPoint=new Location("location A");
+        startPoint=new Location("location A");
         startPoint.setLatitude(loc.latitude);
         startPoint.setLongitude(loc.longitude);
 
-        Location endPoint=new Location("Location B");
+        endPoint=new Location("Location B");
         endPoint.setLongitude(loc1.longitude);
         endPoint.setLatitude(loc1.latitude);
 
         float distance= (int) startPoint.distanceTo(endPoint);
 
-        float totalFare= price*(distance/1000);
+        totalFare= price*(distance/1000);
 
-        float totalFareXL=priceForXL*(distance/1000);
+        totalFareXL=priceForXL*(distance/1000);
 
         System.out.println("My Locations distance and Price : "+ (distance/1000)+"\t Price :"+totalFare);
         System.out.println("My Locations distance and Price For XL : "+ (distance/1000)+"\t Price :"+totalFareXL);
@@ -403,6 +421,92 @@ public class SetDestinationPage extends AppCompatActivity {
                 carDetails.setAnimation(AnimationUtils.loadAnimation(SetDestinationPage.this,R.anim.down));
             }
         },2000);
+
+        intercity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date d=new Date();
+                SimpleDateFormat sf_date= new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sf_time=new SimpleDateFormat("hh:mm:ss");
+                String my_date=sf_date.format(d);
+                String my_time=sf_time.format(d);
+
+                rideData.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        previousRideId=100000+queryDocumentSnapshots.size();
+                        rideId=previousRideId+1;
+                    }
+                });
+
+
+
+                Map<String,Object> ride=new HashMap();
+                ride.put("rideFare",String.valueOf((int)totalFare));
+                ride.put("rideDate",my_date);
+                ride.put("rideTime",my_time);
+                ride.put("pickUp",loc);
+                ride.put("drop",loc1);
+                ride.put("riderNumber",phone);
+                ride.put("rideStatus","0");
+                ride.put("carType","intercity");
+                ride.put("driverAssigned","no");
+                ride.put("driverName","");
+                ride.put("driverNumber","");
+
+
+                rideData.collection("rides").document(Integer.toString(rideId)).set(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                        carDetails.setVisibility(View.GONE);
+                        Toast.makeText(SetDestinationPage.this, "Please Wait while we assign a cab for you", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        xlIntercity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date d=new Date();
+                SimpleDateFormat sf_date= new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sf_time=new SimpleDateFormat("hh:mm:ss");
+                String my_date=sf_date.format(d);
+                String my_time=sf_time.format(d);
+                System.out.println("MyDate : "+my_date+"\tmyTime : "+my_time);
+
+                rideData.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        previousRideId=100000+queryDocumentSnapshots.size();
+                        rideId=previousRideId+1;
+                    }
+                });
+
+                Map<String,Object> ride=new HashMap();
+                ride.put("rideFare",String.valueOf((int)totalFareXL));
+                ride.put("rideDate",my_date);
+                ride.put("rideTime",my_time);
+                ride.put("riderNumber",phone);
+                ride.put("rideStatus","0");
+                ride.put("carType","xlIntercity");
+                ride.put("driverAssigned","no");
+                ride.put("driverName","");
+                ride.put("driverNumber","");
+
+
+                rideData.collection("rides").document(Integer.toString(rideId)).set(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                        carDetails.setVisibility(View.GONE);
+                        Toast.makeText(SetDestinationPage.this, "Please Wait while we assign a cab for you", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
 
 
         backInCarDetails.setOnClickListener(new View.OnClickListener() {
