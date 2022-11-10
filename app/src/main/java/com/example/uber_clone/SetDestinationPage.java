@@ -76,6 +76,7 @@ public class SetDestinationPage extends AppCompatActivity {
     CardView intercity,xlIntercity;
     ConstraintLayout carDetails;
     int price,priceForXL;
+    int i;
     SharedPreferences sp;
     TextView backInDest,priceForIntercity,priceForXLIntercity,backInCarDetails;
     MarkerOptions opt,opt1;
@@ -107,6 +108,19 @@ public class SetDestinationPage extends AppCompatActivity {
         searchViewFrom=findViewById(R.id.searchViewFrom);
         Intent intent=getIntent();
         String type=intent.getStringExtra("type");
+
+
+        rideData.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                System.out.println("rides Size"+queryDocumentSnapshots.getDocuments().size()
+                        +"\t"+queryDocumentSnapshots.size());
+                i=queryDocumentSnapshots.getDocuments().size();
+                System.out.println("rides Size"+i);
+                previousRideId=100000+i;
+                rideId=previousRideId+1;
+            }
+        });
 
         switch(type){
             case "ride":{
@@ -284,13 +298,11 @@ public class SetDestinationPage extends AppCompatActivity {
                     String resultData;
                     resultData=response.body().string();
 
+                    SetDestinationPage.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-
-                SetDestinationPage.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
+                        /*try {
                             JSONObject arr= new JSONObject(resultData);
 
 
@@ -327,68 +339,69 @@ public class SetDestinationPage extends AppCompatActivity {
 
                                 }
                             }
-                            try{
-                                myMap.getMapAsync(new OnMapReadyCallback() {
-                                    @Override
-                                    public void onMapReady(@NonNull GoogleMap googleMap) {
-                                        System.out.println("Location Array Size : "+locationOfDrivers.size());
-
-                                        ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
-                                        progressDialog.setMessage("Please wait while we fetch the navigation routes...");
-                                        progressDialog.setCancelable(false);
-                                        progressDialog.show();
-
-
-                                        googleMap.clear();
-
-                                        googleMap.addMarker(opt);
-                                        googleMap.addMarker(opt1);
-
-                                        for(int i=0;i<locationOfDrivers.size();i++){
-                                            System.out.println("Location Array Size : "+locationOfDrivers.size());
-                                            try {
-                                                ArrayList locations = (ArrayList) locationOfDrivers.get(i);
-                                                String a = (String) locations.get(0);
-                                                String b = (String) locations.get(1);
-                                                double latitudeOfDriver = Double.parseDouble(a);
-                                                double longitudeOfDriver = Double.parseDouble(b);
-                                                LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
-                                                MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
-                                                myDriverOpt.title("Driver");
-                                                googleMap.addMarker(myDriverOpt);
-                                            }catch(Exception e){
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        int myCount= points.size();
-                                        System.out.println("My Points Count : "+myCount);
-
-                                        if(myCount<=2000){
-                                            googleMap.addPolyline(new PolylineOptions().addAll(points));
-                                        }
-                                        else{
-                                            googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
-                                        }
-
-
-                                        LatLngBounds bounds=new LatLngBounds.Builder().include(loc).include(loc1).build();
-                                        Point pt=new Point();
-                                        getWindowManager().getDefaultDisplay().getSize(pt);
-                                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
-                                        progressDialog.dismiss();
-
-
-                                    }
-                                });
-
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                             System.out.println("My Locations3 :");
+                        }*/
+
+                        try{
+                            myMap.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(@NonNull GoogleMap googleMap) {
+                                    System.out.println("Location Array Size : "+locationOfDrivers.size());
+
+                                    ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
+                                    progressDialog.setMessage("Please wait while we fetch the navigation routes...");
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.show();
+
+
+                                    googleMap.clear();
+
+                                    googleMap.addMarker(opt);
+                                    googleMap.addMarker(opt1);
+
+                                    for(int i=0;i<locationOfDrivers.size();i++){
+                                        System.out.println("Location Array Size : "+locationOfDrivers.size());
+                                        try {
+                                            ArrayList locations = (ArrayList) locationOfDrivers.get(i);
+                                            String a = (String) locations.get(0);
+                                            String b = (String) locations.get(1);
+                                            double latitudeOfDriver = Double.parseDouble(a);
+                                            double longitudeOfDriver = Double.parseDouble(b);
+                                            LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
+                                            MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
+                                            myDriverOpt.title("Driver");
+                                            googleMap.addMarker(myDriverOpt);
+                                        }catch(Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    /*int myCount= points.size();
+                                    System.out.println("My Points Count : "+myCount);
+
+                                    if(myCount<=2000){
+                                        googleMap.addPolyline(new PolylineOptions().addAll(points));
+                                    }
+                                    else{
+                                        googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
+                                    }*/
+
+                                    googleMap.addPolyline(new PolylineOptions().add(loc).add(loc1));
+                                    LatLngBounds bounds=new LatLngBounds.Builder().include(loc).include(loc1).build();
+                                    Point pt=new Point();
+                                    getWindowManager().getDefaultDisplay().getSize(pt);
+                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
+                                    progressDialog.dismiss();
+
+
+                                }
+                            });
+
+                        }catch (Exception e){
+                            e.getMessage();
                         }
                     }
 
@@ -444,17 +457,6 @@ public class SetDestinationPage extends AppCompatActivity {
                 SimpleDateFormat sf_time=new SimpleDateFormat("hh:mm:ss");
                 String my_date=sf_date.format(d);
                 String my_time=sf_time.format(d);
-
-                rideData.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        previousRideId=100000+queryDocumentSnapshots.size();
-                        rideId=previousRideId+1;
-                    }
-                });
-
-
-
                 Map<String,Object> ride=new HashMap();
                 ride.put("rideFare",String.valueOf((int)totalFare));
                 ride.put("rideDate",my_date);
@@ -467,7 +469,7 @@ public class SetDestinationPage extends AppCompatActivity {
                         0- Not Assigned
                         1- Assigned
                         2- Started
-                        3- Payment Complete
+                        3- Payment Window
                         4- Ride Complete
                        -1- Cancelled
                 */
@@ -481,7 +483,6 @@ public class SetDestinationPage extends AppCompatActivity {
                 rideData.collection("rides").document(Integer.toString(rideId)).set(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-
                         Intent intent =new Intent(SetDestinationPage.this,RidePage.class);
                         intent.putExtra("rideID",Integer.toString(rideId));
                         startActivity(intent);
@@ -500,13 +501,6 @@ public class SetDestinationPage extends AppCompatActivity {
                 String my_time=sf_time.format(d);
                 System.out.println("MyDate : "+my_date+"\tmyTime : "+my_time);
 
-                rideData.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        previousRideId=100000+queryDocumentSnapshots.size();
-                        rideId=previousRideId+1;
-                    }
-                });
 
                 Map<String,Object> ride=new HashMap();
                 ride.put("rideFare",String.valueOf((int)totalFareXL));
@@ -525,7 +519,6 @@ public class SetDestinationPage extends AppCompatActivity {
                 rideData.collection("rides").document(Integer.toString(rideId)).set(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-
                         Intent intent =new Intent(SetDestinationPage.this,RidePage.class);
                         intent.putExtra("rideID",Integer.toString(rideId));
                         startActivity(intent);
