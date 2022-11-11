@@ -103,8 +103,11 @@ public class ActivityFragment extends Fragment {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                         String ridePageID=ride.get(i).getRideID();
+                                        SharedPreferences ridePref=getActivity().getSharedPreferences("MyRide",Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor=ridePref.edit();
+                                        editor.putString("rideID", ridePageID);
+                                        editor.commit();
                                         Intent intent=new Intent(getActivity(),RidePage.class);
-                                        intent.putExtra("rideID",ridePageID);
                                         startActivity(intent);
                                     }
                                 });

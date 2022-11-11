@@ -524,8 +524,13 @@ public class SetDestinationPage extends AppCompatActivity {
                 rideData.collection("rides").document(Integer.toString(rideId)).set(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
+                        SharedPreferences ridePref=getSharedPreferences("MyRide",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=ridePref.edit();
+                        editor.putString("rideID", String.valueOf(rideId));
+                        editor.commit();
+
                         Intent intent =new Intent(SetDestinationPage.this,RidePage.class);
-                        intent.putExtra("rideID",Integer.toString(rideId));
+
                         startActivity(intent);
                     }
                 });

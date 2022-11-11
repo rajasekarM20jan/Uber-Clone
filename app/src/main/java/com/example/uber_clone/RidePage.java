@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,9 +41,9 @@ public class RidePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_page);
-        Intent i=getIntent();
+        SharedPreferences ridePref=getSharedPreferences("MyRide",MODE_PRIVATE);
+        rideID=ridePref.getString("rideID","noRides");
         map=(SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInRide);
-        rideID=i.getStringExtra("rideID");
         rideData=FirebaseFirestore.getInstance();
         driverData=FirebaseFirestore.getInstance();
 
