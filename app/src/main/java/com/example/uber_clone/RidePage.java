@@ -14,10 +14,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -93,6 +95,7 @@ public class RidePage extends AppCompatActivity {
                     case "0":{
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
+                        googleMap.addPolyline(new PolylineOptions().add(loc1).add(loc2));
                         LatLngBounds bounds=new LatLngBounds.Builder().include(loc1).include(loc2).build();
                         Point pt=new Point();
                         getWindowManager().getDefaultDisplay().getSize(pt);
@@ -116,9 +119,10 @@ public class RidePage extends AppCompatActivity {
                                 driverLoc=new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()),Double.parseDouble(documentSnapshot.get("longitude").toString()));
                             }
                         });
-                        driverOpt=new MarkerOptions();
+                        driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                         driverOpt.position(driverLoc);
                         googleMap.addMarker(driverOpt);
+                        googleMap.addPolyline(new PolylineOptions().add(driverLoc).add(loc1));
                         LatLngBounds bounds=new LatLngBounds.Builder().include(driverLoc).include(loc1).build();
                         Point pt=new Point();
                         getWindowManager().getDefaultDisplay().getSize(pt);
@@ -142,9 +146,10 @@ public class RidePage extends AppCompatActivity {
                                 driverLoc=new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()),Double.parseDouble(documentSnapshot.get("longitude").toString()));
                             }
                         });
-                        driverOpt=new MarkerOptions();
+                        driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                         driverOpt.position(driverLoc);
                         googleMap.addMarker(driverOpt);
+                        googleMap.addPolyline(new PolylineOptions().add(driverLoc).add(loc2));
                         LatLngBounds bounds=new LatLngBounds.Builder().include(driverLoc).include(loc2).build();
                         Point pt=new Point();
                         getWindowManager().getDefaultDisplay().getSize(pt);

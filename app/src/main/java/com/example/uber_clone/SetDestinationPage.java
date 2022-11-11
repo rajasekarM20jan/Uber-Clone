@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
@@ -36,6 +37,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
@@ -158,7 +161,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                 double lat=location.getLatitude();
                                 double lon=location.getLongitude();
                                 loc= new LatLng(lat,lon);
-                                opt=new MarkerOptions().position(loc);
+                                opt=new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.squaremarker));
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
                                 googleMap.addMarker(opt);
                                         for(int i=0;i<locationOfDrivers.size();i++) {
@@ -359,8 +362,8 @@ public class SetDestinationPage extends AppCompatActivity {
 
                                     googleMap.clear();
 
-                                    googleMap.addMarker(opt);
-                                    googleMap.addMarker(opt1);
+                                    googleMap.addMarker(opt).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.squaremarker));
+                                    googleMap.addMarker(opt1).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.squaremarker));
 
                                     for(int i=0;i<locationOfDrivers.size();i++){
                                         System.out.println("Location Array Size : "+locationOfDrivers.size());
@@ -371,7 +374,9 @@ public class SetDestinationPage extends AppCompatActivity {
                                             double latitudeOfDriver = Double.parseDouble(a);
                                             double longitudeOfDriver = Double.parseDouble(b);
                                             LatLng latLngOfDriver = new LatLng(latitudeOfDriver, longitudeOfDriver);
-                                            MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
+                                            MarkerOptions myDriverOpt = new MarkerOptions()
+                                                    .position(latLngOfDriver)
+                                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                                             myDriverOpt.title("Driver");
                                             googleMap.addMarker(myDriverOpt);
                                         }catch(Exception e){
