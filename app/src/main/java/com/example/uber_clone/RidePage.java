@@ -45,6 +45,9 @@ public class RidePage extends AppCompatActivity {
         rideID=i.getStringExtra("rideID");
         rideData=FirebaseFirestore.getInstance();
         driverData=FirebaseFirestore.getInstance();
+
+
+
         rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -56,7 +59,22 @@ public class RidePage extends AppCompatActivity {
                 System.out.println("My Location in loc1 : "+loc1);
                 loc2=new LatLng(Double.parseDouble(locB.get("latitude").toString()),Double.parseDouble(locB.get("longitude").toString()));
                 System.out.println("My Location in loc2 : "+loc2);
-                getStatus();
+                rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        driverMobile=documentSnapshot.get("driverNumber").toString();
+
+                        driverData.collection("drivers").document(driverMobile).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                driverLoc=new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()),Double.parseDouble(documentSnapshot.get("longitude").toString()));
+                                getStatus();
+
+                            }
+                        });
+                    }
+                });
+
 
             }
         });
@@ -107,18 +125,7 @@ public class RidePage extends AppCompatActivity {
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
 
-                        rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                driverMobile=documentSnapshot.get("driverNumber").toString();
-                            }
-                        });
-                        driverData.collection("drivers").document(driverMobile).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                driverLoc=new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()),Double.parseDouble(documentSnapshot.get("longitude").toString()));
-                            }
-                        });
+
                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                         driverOpt.position(driverLoc);
                         googleMap.addMarker(driverOpt);
@@ -133,19 +140,6 @@ public class RidePage extends AppCompatActivity {
                     case "2":{
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
-
-                        rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                driverMobile=documentSnapshot.get("driverNumber").toString();
-                            }
-                        });
-                        driverData.collection("drivers").document(driverMobile).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                driverLoc=new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()),Double.parseDouble(documentSnapshot.get("longitude").toString()));
-                            }
-                        });
                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                         driverOpt.position(driverLoc);
                         googleMap.addMarker(driverOpt);
