@@ -13,5 +13,29 @@
         android:layout_height="400dp"
         android:layout_marginTop="70dp"
         app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/fdn"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/myridedetails"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fdn"
+        app:layout_constraintStart_toStartOf="@id/fdn"
+        android:layout_margin="20dp"
+        android:text="Please wait while we confirm your Ride"/>
+    <TextView
+        android:id="@+id/timerWidget"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="@id/fdn"
+        app:layout_constraintEnd_toEndOf="@id/fdn"
+        android:layout_margin="20dp"
+        android:text="60"
+        android:gravity="center"
+        android:background="@drawable/timer"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
