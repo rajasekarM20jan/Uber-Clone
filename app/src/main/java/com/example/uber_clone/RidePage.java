@@ -1,12 +1,21 @@
 package com.example.uber_clone;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -26,6 +35,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+
+import io.grpc.Channel;
 
 public class RidePage extends AppCompatActivity {
 
@@ -125,8 +136,6 @@ public class RidePage extends AppCompatActivity {
                     case "1":{
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
-
-
                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
                         driverOpt.position(driverLoc);
                         googleMap.addMarker(driverOpt);
@@ -139,6 +148,41 @@ public class RidePage extends AppCompatActivity {
                         break;
                     }
                     case "2":{
+
+                        googleMap.addMarker(opt);
+                        googleMap.addMarker(opt1);
+                        driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
+                        driverOpt.position(driverLoc);
+                        googleMap.addMarker(driverOpt);
+                        googleMap.addPolyline(new PolylineOptions().add(driverLoc).add(loc1));
+                        LatLngBounds bounds=new LatLngBounds.Builder().include(driverLoc).include(loc1).build();
+                        Point pt=new Point();
+                        getWindowManager().getDefaultDisplay().getSize(pt);
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
+
+                        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.O){
+                            NotificationChannel nChannel=
+                                    new NotificationChannel("My Notification","Notification"
+                                            ,NotificationManager.IMPORTANCE_DEFAULT);
+                            NotificationManager manager=getSystemService(NotificationManager.class);
+                            manager.createNotificationChannel(nChannel);
+                        }
+
+                        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        NotificationCompat.Builder builder =
+                                new NotificationCompat.Builder(RidePage.this,"My Notification")
+                                        .setSmallIcon(R.drawable.carmarker)
+                                        .setSound(uri)
+                                        .setContentTitle("Knock Knock!")
+                                        .setAutoCancel(true)
+                                        .setContentText("We are waiting outside..");
+
+
+                        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        manager.notify(0,builder.build());
+                        break;
+                    }
+                    case "3":{
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));

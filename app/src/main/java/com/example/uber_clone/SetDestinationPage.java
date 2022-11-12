@@ -473,8 +473,8 @@ public class SetDestinationPage extends AppCompatActivity {
                     Ride Status:
                         0- Not Assigned
                         1- Assigned
-                        2- Started
-                        3- Payment Window
+                        2- Reached PickUp Location
+                        3- Ride Started
                         4- Ride Complete
                        -1- Cancelled
                 */
