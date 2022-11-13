@@ -42,7 +42,6 @@ public class ActivityFragment extends Fragment {
     ArrayList allRides;
     ArrayList<RideList> ride;
     List<Address> address;
-    int b;
     ListView upcomingRidesList,previousRidesList;
 
     @Override
@@ -67,6 +66,7 @@ public class ActivityFragment extends Fragment {
                     allRides.add(queryDocumentSnapshots.getDocuments().get(i).getData());
                 }
                 for(int j=0;j<allRides.size();j++){
+
                     h=(HashMap) allRides.get(j);
 
                     if(h.get("riderNumber").equals(phone)){
@@ -82,47 +82,54 @@ public class ActivityFragment extends Fragment {
                         }
                         City=address.get(0).getLocality();
                         Fare=h.get("rideFare").toString();
-                        b=j;
-
-                        ridesList.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                ArrayList a=new ArrayList<>();
-
-                                a.add(queryDocumentSnapshots.getDocuments().get(b));
-                                DocumentSnapshot doc=(DocumentSnapshot) a.get(0);
-                                rideID=doc.getId();
-                                System.out.println("My Ride ID"+rideID);
-                                ride.add(new RideList(rideID,City,Fare));
-                                System.out.println("My List : "+ride.get(0).getRideID()+"\t"+ride.get(0).getCity()+"\t"+ride.get(0).getFare());
-                                UpcomingAdapter adapter=new UpcomingAdapter(getActivity(),R.layout.custom_list_upcoming,ride);
-                                upcomingRidesList.setAdapter(adapter);
-
-
-                                upcomingRidesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        String ridePageID=ride.get(i).getRideID();
-                                        SharedPreferences ridePref=getActivity().getSharedPreferences("MyRide",Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor=ridePref.edit();
-                                        editor.putString("rideID", ridePageID);
-                                        editor.commit();
-                                        Intent intent=new Intent(getActivity(),RidePage.class);
-                                        startActivity(intent);
-                                    }
-                                });
-
-                            }
-                        });
+                        getRideID(j,City,Fare);
                     }
                 }
             }
         });
-
-
-
-
-
         return view;
+    }
+
+    private void getRideID(int abcd,String city,String fare) {
+        ridesList.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                ArrayList a=new ArrayList<>();
+
+                a.add(queryDocumentSnapshots.getDocuments().get(abcd));
+                DocumentSnapshot doc = (DocumentSnapshot) a.get(0);
+                rideID = doc.getId();
+                System.out.println("My Ride ID" + rideID);
+                ride.add(new RideList(rideID, city, fare));
+
+
+                for(int k=0;k<ride.size();k++){
+                    System.out.println("My List : "+ride.get(k).getRideID()
+                            +"\t"+ride.get(k).getCity()
+                            +"\t"+ride.get(k).getFare());
+                }
+
+
+                UpcomingAdapter adapter=new UpcomingAdapter(getActivity(),R.layout.custom_list_upcoming,ride);
+                upcomingRidesList.setAdapter(adapter);
+
+
+                upcomingRidesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String ridePageID=ride.get(i).getRideID();
+                        SharedPreferences ridePref=getActivity().getSharedPreferences("MyRide"
+                                ,Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=ridePref.edit();
+                        editor.putString("rideID", ridePageID);
+                        editor.commit();
+                        Intent intent=new Intent(getActivity(),RidePage.class);
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        });
+
     }
 }
