@@ -26,6 +26,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:divider="@color/white"
         android:id="@+id/upcomingRidesList"
         android:orientation="vertical"/>
 
@@ -43,6 +44,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:divider="@color/white"
         app:layout_constraintTop_toBottomOf="@id/upcomingRidesList"
         android:layout_marginTop="70dp"
         android:layout_marginStart="10dp"

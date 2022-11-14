@@ -36,8 +36,8 @@ public class previousAdapter extends ArrayAdapter<PreviousRide> {
         LayoutInflater inflator= LayoutInflater.from(context);
         View  view=inflator.inflate(resource,null);
 
-        City=view.findViewById(R.id.cityName);
-        rideFare=view.findViewById(R.id.rideFare);
+        City=view.findViewById(R.id.cityNameP);
+        rideFare=view.findViewById(R.id.rideFareP);
 
         address=myAddress.get(position);
         City.setText(address.getCity());

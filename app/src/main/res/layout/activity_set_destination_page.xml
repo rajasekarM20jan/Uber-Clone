@@ -127,7 +127,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/services" />
+                app:srcCompat="@drawable/intercity" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -135,6 +135,8 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_marginStart="130dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-black"
                 android:text="Inter City" />
 
             <TextView
@@ -159,7 +161,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/services" />
+                app:srcCompat="@drawable/xl" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -167,6 +169,8 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_marginStart="130dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-black"
                 android:text="XL Inter City" />
 
             <TextView

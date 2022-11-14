@@ -18,6 +18,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +38,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import io.grpc.Channel;
@@ -44,6 +50,7 @@ public class RidePage extends AppCompatActivity {
     MarkerOptions opt,opt1,driverOpt;
     LatLng loc1,loc2,driverLoc;
     String rideID;
+    Button tryAgain,cancelRide;
     String Status,driverMobile;
     SupportMapFragment map;
 
@@ -57,9 +64,16 @@ public class RidePage extends AppCompatActivity {
         map=(SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInRide);
         rideData=FirebaseFirestore.getInstance();
         driverData=FirebaseFirestore.getInstance();
-
+        tryAgain=findViewById(R.id.tryAgain);
+        cancelRide=findViewById(R.id.cancelRide);
 
         System.out.println("Ride ID123 is : "+rideID);
+
+
+
+
+
+
         if(rideID.equals("noRides")){
 
         }
@@ -140,6 +154,7 @@ public class RidePage extends AppCompatActivity {
                         break;
                     }
                     case "1":{
+                        tryAgain.setVisibility(View.INVISIBLE);
                         rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -171,6 +186,8 @@ public class RidePage extends AppCompatActivity {
                         break;
                     }
                     case "2":{
+                        cancelRide.setVisibility(View.INVISIBLE);
+                        tryAgain.setVisibility(View.INVISIBLE);
                         rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -212,7 +229,8 @@ public class RidePage extends AppCompatActivity {
                         break;
                     }
                     case "3":{
-
+                        tryAgain.setVisibility(View.INVISIBLE);
+                        cancelRide.setVisibility(View.INVISIBLE);
                         rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -254,6 +272,8 @@ public class RidePage extends AppCompatActivity {
                         break;
                     }
                     case "4":{
+                        tryAgain.setVisibility(View.INVISIBLE);
+                        cancelRide.setVisibility(View.INVISIBLE);
                         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         NotificationCompat.Builder builder =
                                 new NotificationCompat.Builder(RidePage.this,"My Notification")
@@ -270,6 +290,41 @@ public class RidePage extends AppCompatActivity {
                 }
             }
         });
+
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date d=new Date();
+                SimpleDateFormat r=new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat s=new SimpleDateFormat("hh:mm:ss");
+                String time=s.format(d);
+                String date=r.format(d);
+                rideData.collection("rides").document(rideID).update("rideDate",date);
+                rideData.collection("rides").document(rideID).update("rideTime",time);
+
+                getStatus();
+            }
+        });
+
+        cancelRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rideData.collection("rides").document(rideID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String rideStatus=documentSnapshot.get("rideStatus").toString();
+                        if(rideStatus.equals("0")||rideStatus.equals("1")){
+                            rideData.collection("rides").document(rideID).update("rideStatus","-1");
+                            goToDashBoard();
+                        }else{
+                            Toast.makeText(RidePage.this, "You cannot cancel your ride now..", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        });
+
 
     }
     void goToDashBoard(){

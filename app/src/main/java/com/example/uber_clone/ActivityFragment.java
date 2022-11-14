@@ -41,7 +41,7 @@ public class ActivityFragment extends Fragment {
     SharedPreferences sp;
     String phone,City,Fare,rideID,City2,Fare2,rideID2;
     HashMap h,h2;
-    ArrayList allRides;
+    ArrayList allRides,allRides2;
     ArrayList<RideList> ride;
     ArrayList<PreviousRide> previousRide;
     List<Address> address;
@@ -55,6 +55,7 @@ public class ActivityFragment extends Fragment {
         upcomingRidesList=view.findViewById(R.id.upcomingRidesList);
         previousRidesList=view.findViewById(R.id.previousRidesList);
         allRides=new ArrayList<>();
+        allRides2=new ArrayList<>();
         sp=getActivity().getSharedPreferences("MyMobile", Context.MODE_PRIVATE);
         phone=sp.getString("mobile","numberNotFound");
 
@@ -101,19 +102,19 @@ public class ActivityFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                 for(int i=0;i<queryDocumentSnapshots.size();i++){
-                    allRides.add(queryDocumentSnapshots.getDocuments().get(i).getData());
+                    allRides2.add(queryDocumentSnapshots.getDocuments().get(i).getData());
                 }
-                for(int j=0;j<allRides.size();j++) {
+                for(int j=0;j<allRides2.size();j++) {
 
-                    h2 = (HashMap) allRides.get(j);
+                    h2 = (HashMap) allRides2.get(j);
 
                     if (h2.get("rideStatus").equals("-1")||h2.get("rideStatus").equals("4")) {
                         if (h2.get("riderNumber").equals(phone)) {
                             HashMap drop = (HashMap) h2.get("drop");
                             LatLng dropLatLng = new LatLng(Double.parseDouble(drop.get("latitude").toString()), Double.parseDouble(drop.get("longitude").toString()));
-                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                            Geocoder geocoder2 = new Geocoder(getActivity(), Locale.getDefault());
                             try {
-                                address = geocoder
+                                address = geocoder2
                                         .getFromLocation(dropLatLng.latitude, dropLatLng.longitude, 1);
 
                             } catch (IOException e) {
@@ -121,7 +122,7 @@ public class ActivityFragment extends Fragment {
                             }
                             City2 = address.get(0).getLocality();
                             Fare2 = h2.get("rideFare").toString();
-                           /* getPreviousRideID(j, City2, Fare2);*/
+                            getPreviousRideID(j, City2, Fare2);
                         }
                     }
                 }
@@ -135,7 +136,7 @@ public class ActivityFragment extends Fragment {
         return view;
     }
 
-    /*private void getPreviousRideID(int abc, String city, String fare) {
+    private void getPreviousRideID(int abc, String city, String fare) {
         ridesList.collection("rides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -143,9 +144,9 @@ public class ActivityFragment extends Fragment {
 
                 a.add(queryDocumentSnapshots.getDocuments().get(abc));
                 DocumentSnapshot doc = (DocumentSnapshot) a.get(0);
-                rideID = doc.getId();
-                System.out.println("My Ride ID" + rideID);
-                previousRide.add(new PreviousRide(rideID, city, fare));
+                rideID2 = doc.getId();
+                System.out.println("My Ride ID" + rideID2);
+                previousRide.add(new PreviousRide(rideID2, city, fare));
 
                 for(int k=0;k<ride.size();k++){
                     System.out.println("My List : "+ride.get(k).getRideID()
@@ -157,7 +158,7 @@ public class ActivityFragment extends Fragment {
 
             }
         });
-    }*/
+    }
 
 
     private void getRideID(int abcd,String city,String fare) {

@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.Objects;
+
 public class DashBoard extends AppCompatActivity {
     Fragment frag=null;
     BottomNavigationView btmView;
@@ -62,25 +64,6 @@ public class DashBoard extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(frag==new HomeFragment()){
-            AlertDialog.Builder exit=new AlertDialog.Builder(DashBoard.this);
-            exit.setMessage("Are you Sure about to exit the application");
-            exit.setPositiveButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            exit.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finishAffinity();
-                }
-            });
-            exit.show();
-        }else{
-            frag=new HomeFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashBoard,frag).commit();
-        }
+
     }
 }
