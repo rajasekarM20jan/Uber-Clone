@@ -79,16 +79,6 @@ public class RidePage extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             getStatus();
-                            /*driverMobile = documentSnapshot.get("driverNumber").toString();
-
-                            driverData.collection("drivers").document(driverMobile).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    driverLoc = new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()), Double.parseDouble(documentSnapshot.get("longitude").toString()));
-                                    getStatus();
-
-                                }
-                            });*/
                         }
                     });
 
@@ -137,6 +127,8 @@ public class RidePage extends AppCompatActivity {
                 switch (Status){
 
                     case "0":{
+
+                        googleMap.clear();
                         googleMap.addMarker(opt);
                         googleMap.addMarker(opt1);
                         googleMap.addPolyline(new PolylineOptions().add(loc1).add(loc2));
@@ -157,6 +149,8 @@ public class RidePage extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         driverLoc = new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()), Double.parseDouble(documentSnapshot.get("longitude").toString()));
+
+                                        googleMap.clear();
                                         googleMap.addMarker(opt);
                                         googleMap.addMarker(opt1);
                                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
@@ -187,6 +181,7 @@ public class RidePage extends AppCompatActivity {
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         driverLoc = new LatLng(Double.parseDouble(documentSnapshot.get("latitude").toString()), Double.parseDouble(documentSnapshot.get("longitude").toString()));
 
+                                        googleMap.clear();
                                         googleMap.addMarker(opt);
                                         googleMap.addMarker(opt1);
                                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
@@ -235,7 +230,11 @@ public class RidePage extends AppCompatActivity {
                                                         .setContentTitle("Gotcha!")
                                                         .setAutoCancel(true)
                                                         .setContentText("Enjoy Your Ride @ every moment with Uber...");
+                                        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                        manager.notify(1,builder.build());
 
+
+                                        googleMap.clear();
                                         googleMap.addMarker(opt);
                                         googleMap.addMarker(opt1);
                                         driverOpt=new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.carmarker));
@@ -254,16 +253,34 @@ public class RidePage extends AppCompatActivity {
                         });
                         break;
                     }
+                    case "4":{
+                        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        NotificationCompat.Builder builder =
+                                new NotificationCompat.Builder(RidePage.this,"My Notification")
+                                        .setSmallIcon(R.drawable.carmarker)
+                                        .setSound(uri)
+                                        .setContentTitle("Ride Completed  :)")
+                                        .setAutoCancel(true)
+                                        .setContentText("Have a Good Day... Don't forget to choose us for next ride..");
+                        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                        manager.notify(1,builder.build());
+                        goToDashBoard();
+                    }
                 }
             }
         });
 
     }
+    void goToDashBoard(){
+        Intent intent=new Intent(RidePage.this,DashBoard.class);
+        startActivity(intent);
+    }
+
 
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(RidePage.this,DashBoard.class);
-        startActivity(intent);
+        goToDashBoard();
     }
 }

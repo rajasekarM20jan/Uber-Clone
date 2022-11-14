@@ -236,7 +236,6 @@ public class SetDestinationPage extends AppCompatActivity {
                     HashMap hashMap= (HashMap) drivers.get(j);
                     System.out.println("DriverData hash : "+hashMap.get("loginStatus"));
                     if(hashMap.get("loginStatus").equals("Online")){
-
                         String lat1= (String) hashMap.get("latitude");
                         String lon1= (String) hashMap.get("longitude");
                         d.add(lat1);
