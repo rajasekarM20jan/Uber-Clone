@@ -1,60 +1,40 @@
 package com.example.uber_clone;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -85,6 +64,7 @@ public class SetDestinationPage extends AppCompatActivity {
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
     String phone;
+    ProgressDialog progressDialog;
     Location startPoint,endPoint;
     FusedLocationProviderClient client;
     FirebaseFirestore driverLocationFetcher,rideData;
@@ -93,6 +73,11 @@ public class SetDestinationPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_destination_page);
+
+        progressDialog=new ProgressDialog(SetDestinationPage.this);
+        progressDialog.setMessage("Please wait while we fetch the navigation routes...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         myMap= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInDestination);
         backInDest=findViewById(R.id.backInDest);
         backInCarDetails=findViewById(R.id.backInCarDetails);
@@ -297,8 +282,6 @@ public class SetDestinationPage extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
-                    String resultData;
-                    resultData=response.body().string();
 
                     SetDestinationPage.this.runOnUiThread(new Runnable() {
                         @Override
@@ -353,10 +336,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                 public void onMapReady(@NonNull GoogleMap googleMap) {
                                     System.out.println("Location Array Size : "+locationOfDrivers.size());
 
-                                    ProgressDialog progressDialog=new ProgressDialog(SetDestinationPage.this);
-                                    progressDialog.setMessage("Please wait while we fetch the navigation routes...");
-                                    progressDialog.setCancelable(false);
-                                    progressDialog.show();
+
 
 
                                     googleMap.clear();

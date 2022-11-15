@@ -39,7 +39,7 @@
                             android:layout_marginBottom="10dp"
                             android:drawableStart="@drawable/search"
                             android:drawablePadding="10dp"
-                            android:text="Where to?"
+                            android:text="@string/where_to"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             tools:ignore="TouchTargetSizeCheck" />
@@ -54,7 +54,7 @@
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/timer_button"
                             android:drawableEnd="@drawable/exit"
-                            android:text="Exit"
+                            android:text="@string/exit"
                             android:gravity="center"
                             android:textColor="@color/black"
                             tools:ignore="TouchTargetSizeCheck" />
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Suggestions"
+                    android:text="@string/suggestions"
                     android:fontFamily="sans-serif-black"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -102,7 +102,7 @@
                                     android:textAlignment="center"
                                     android:layout_margin="10dp"
                                     android:fontFamily="sans-serif"
-                                    android:text="Ride"
+                                    android:text="@string/ride"
                                     android:textColor="@color/black"
                                     />
                         </LinearLayout>
@@ -132,7 +132,7 @@
                                     android:textAlignment="center"
                                     android:layout_margin="10dp"
                                     android:fontFamily="sans-serif"
-                                    android:text="Rental"
+                                    android:text="@string/rental"
                                     android:textColor="@color/black"
                                     />
                         </LinearLayout>
@@ -160,7 +160,7 @@
                                     android:layout_margin="10dp"
                                     android:textAlignment="center"
                                     android:fontFamily="sans-serif"
-                                    android:text="View All"
+                                    android:text="@string/view_all"
                                     android:textColor="@color/black"
                                     />
                         </LinearLayout>
@@ -169,7 +169,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ways to Save through Uber"
+                    android:text="@string/ways_to_save_through_uber"
                     android:fontFamily="sans-serif-black"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -200,7 +200,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image1" />
+                                    android:src="@drawable/image1"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                         <TextView
                                             android:layout_width="match_parent"
@@ -208,7 +209,7 @@
                                             android:layout_margin="15dp"
                                             android:textColor="@color/black"
                                             android:fontFamily="sans-serif"
-                                            android:text="Public transit"
+                                            android:text="@string/public_transit"
                                             />
 
                                 </LinearLayout>
@@ -228,7 +229,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/image2" />
+                                    android:src="@drawable/image2"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
 
                                         <TextView
@@ -237,7 +239,7 @@
                                             android:layout_margin="15dp"
                                             android:textColor="@color/black"
                                             android:fontFamily="sans"
-                                            android:text="Choose Your \nDestination"
+                                            android:text="@string/choose_your_destination"
                                             />
 
                                 </LinearLayout>
@@ -257,7 +259,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image3" />
+                                    android:src="@drawable/image3"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                         <TextView
                                             android:layout_width="match_parent"
@@ -265,7 +268,7 @@
                                             android:layout_margin="15dp"
                                             android:textColor="@color/black"
                                             android:fontFamily="sans-serif"
-                                            android:text="Uber Moto Rides"
+                                            android:text="@string/uber_moto_rides"
                                             />
 
                                 </LinearLayout>
@@ -285,7 +288,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image9" />
+                                    android:src="@drawable/image9"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -293,7 +297,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Any Ride with Uber"
+                                    android:text="@string/any_ride_with_uber"
                                     />
 
                         </LinearLayout>
@@ -307,7 +311,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ways To Plan with Uber"
+                    android:text="@string/ways_to_plan_with_uber"
                     android:fontFamily="sans-serif-black"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -340,7 +344,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image4" />
+                                    android:src="@drawable/image4"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
 
                                         <TextView
@@ -349,7 +354,7 @@
                                             android:layout_margin="15dp"
                                             android:textColor="@color/black"
                                             android:fontFamily="sans-serif"
-                                            android:text="Auto Trips"
+                                            android:text="@string/auto_trips"
                                             />
 
                                 </LinearLayout>
@@ -367,7 +372,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image5" />
+                                    android:src="@drawable/image5"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -375,7 +381,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="InterCity Rides"
+                                    android:text="@string/intercity_rides"
                                     />
 
                         </LinearLayout>
@@ -395,7 +401,8 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/image6" />
+                                    android:src="@drawable/image6"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -403,7 +410,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="For XL Group Rides"
+                                    android:text="@string/for_xl_group_rides"
                                     />
 
                         </LinearLayout>
@@ -423,7 +430,8 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:src="@drawable/image9" />
+                                    android:src="@drawable/image9"
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -431,7 +439,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Confused? Try Uber"
+                                    android:text="@string/confused_try_uber"
                                     />
 
                         </LinearLayout>
@@ -444,7 +452,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="More Ways to use Uber"
+                    android:text="@string/more_ways_to_use_uber"
                     android:fontFamily="sans-serif-black"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -477,7 +485,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/image10"
-                                    />
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -485,7 +493,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Hourly Rentals/Rides"
+                                    android:text="@string/hourly_rentals_rides"
                                     />
 
                         </LinearLayout>
@@ -506,7 +514,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/image8"
-                                    />
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -514,7 +522,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Economically Better"
+                                    android:text="@string/economically_better"
                                     />
 
                         </LinearLayout>
@@ -534,7 +542,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/image7"
-                                    />
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -542,7 +550,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Transport Package"
+                                    android:text="@string/transport_package"
                                     />
 
                         </LinearLayout>
@@ -562,7 +570,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/image9"
-                                    />
+                                    tools:ignore="ContentDescription" />
                                 </androidx.cardview.widget.CardView>
                                 <TextView
                                     android:layout_width="match_parent"
@@ -570,7 +578,7 @@
                                     android:layout_margin="15dp"
                                     android:textColor="@color/black"
                                     android:fontFamily="sans-serif"
-                                    android:text="Still Waiting? \nBook Now..."
+                                    android:text="@string/still_waiting_book_now"
                                     />
 
                         </LinearLayout>
@@ -585,7 +593,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="AROUND YOU"
+                    android:text="@string/around_you"
                     android:fontFamily="sans-serif-black"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -600,7 +608,7 @@
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/googleMap"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
-                />
+                    tools:ignore="FragmentTagUsage" />
         </LinearLayout>
 </ScrollView>
 

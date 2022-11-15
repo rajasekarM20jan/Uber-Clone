@@ -15,7 +15,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="300dp"
         android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-        android:text="Enter Your  OTP"
+        android:text="@string/enter_your_otp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,10 +44,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/next_button"
-        android:fontFamily="@font/alegreya_sans_sc_bold_italic"
+        android:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Verify"
+        android:text="@string/verify"
         android:layout_margin="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

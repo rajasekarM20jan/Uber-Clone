@@ -50,7 +50,7 @@ public class VerificationPage extends AppCompatActivity {
                     verifyCode(pinEt.getText().toString());
                 }
                 else{
-                    pinEt.setError("Invalid Pin");
+                    pinEt.setError(getString(R.string.invalid_pin));
                 }
             }
         });
@@ -110,7 +110,7 @@ public class VerificationPage extends AppCompatActivity {
 
                 }else{
                     AlertDialog.Builder alert= new AlertDialog.Builder(VerificationPage.this);
-                    alert.setMessage("Verification Failed");
+                    alert.setMessage(R.string.vierification_failed);
                     alert.show();
                 }
             }

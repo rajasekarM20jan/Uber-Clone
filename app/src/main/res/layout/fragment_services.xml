@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
-        android:text="Services"
+        android:text="@string/services"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/black"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="100dp"
         android:layout_marginStart="25dp"
-        android:text="Go AnyWhere, Get Anything..."
+        android:text="@string/go_anywhere_get_anything"
         android:textColor="@color/black"
         android:textSize="18sp"/>
 
@@ -56,7 +56,7 @@
         android:layout_margin="10dp"
         android:fontFamily="sans-serif"
         android:textColor="@color/black"
-        android:text="Ride"/>
+        android:text="@string/ride"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -84,7 +84,7 @@
         android:layout_margin="10dp"
         android:fontFamily="sans-serif"
         android:textColor="@color/black"
-        android:text="Rental"/>
+        android:text="@string/rental"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="sans-serif"
-        android:text="Package"
+        android:text="@string/parcel"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
