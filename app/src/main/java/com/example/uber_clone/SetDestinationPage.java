@@ -64,7 +64,6 @@ public class SetDestinationPage extends AppCompatActivity {
     MarkerOptions opt,opt1;
     SupportMapFragment myMap;
     String phone;
-    ProgressDialog progressDialog;
     Location startPoint,endPoint;
     FusedLocationProviderClient client;
     FirebaseFirestore driverLocationFetcher,rideData;
@@ -73,11 +72,6 @@ public class SetDestinationPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_destination_page);
-
-        progressDialog=new ProgressDialog(SetDestinationPage.this);
-        progressDialog.setMessage("Please wait while we fetch the navigation routes...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
         myMap= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMapInDestination);
         backInDest=findViewById(R.id.backInDest);
         backInCarDetails=findViewById(R.id.backInCarDetails);
@@ -149,6 +143,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                 opt=new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.squaremarker));
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
                                 googleMap.addMarker(opt);
+
                                         for(int i=0;i<locationOfDrivers.size();i++) {
                                             try {
                                                 ArrayList locations = (ArrayList) locationOfDrivers.get(i);
@@ -160,6 +155,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                                 MarkerOptions myDriverOpt = new MarkerOptions().position(latLngOfDriver);
                                                 myDriverOpt.title("Driver");
                                                 googleMap.addMarker(myDriverOpt);
+
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -378,7 +374,7 @@ public class SetDestinationPage extends AppCompatActivity {
                                     Point pt=new Point();
                                     getWindowManager().getDefaultDisplay().getSize(pt);
                                     googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,pt.x,800,30));
-                                    progressDialog.dismiss();
+
 
 
                                 }
