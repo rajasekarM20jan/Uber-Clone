@@ -74,7 +74,8 @@ public class ActivityFragment extends Fragment {
 
                     h = (HashMap) allRides.get(j);
 
-                    if (h.get("rideStatus").equals("0")) {
+                    if (h.get("rideStatus").equals("0")||h.get("rideStatus").equals("1")
+                            ||h.get("rideStatus").equals("2")||h.get("rideStatus").equals("3")) {
                         if (h.get("riderNumber").equals(phone)) {
                             HashMap drop = (HashMap) h.get("drop");
                             LatLng dropLatLng = new LatLng(Double.parseDouble(drop.get("latitude").toString()), Double.parseDouble(drop.get("longitude").toString()));

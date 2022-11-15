@@ -7,12 +7,6 @@
     android:id="@+id/homeFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
-
-
-
-
-
-
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -70,10 +64,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Suggestions"
-                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:layout_margin="30dp"
+                    android:layout_margin="20dp"
                     />
 
                 <LinearLayout
@@ -81,40 +75,105 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:orientation="horizontal">
-                        <android.widget.Button
-                            android:id="@+id/rideInHome"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:text="Ride"
-                            android:background="@drawable/background"
-                            android:layout_margin="10dp"
-                            />
-                        <android.widget.Button
-                            android:id="@+id/rentalInHome"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:text="Rental"
-                            android:background="@drawable/background"
-                            android:layout_margin="10dp"
-                            />
-                        <android.widget.Button
-                            android:id="@+id/viewAll"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:text="View All"
-                            android:background="@drawable/background"
-                            android:layout_margin="10dp"
-                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/background"
+                                    >
+
+
+                                <android.widget.Button
+                                        android:id="@+id/rideInHome"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/ride"
+                                        />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Ride"
+                                    android:textColor="@color/black"
+                                    />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/background"
+                                    >
+
+
+                                        <android.widget.Button
+                                            android:id="@+id/rentalInHome"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/rental"
+                                            />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center"
+                                    android:layout_margin="10dp"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Rental"
+                                    android:textColor="@color/black"
+                                    />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_margin="20dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/background"
+                                    >
+                                        <android.widget.Button
+                                            android:id="@+id/viewAll"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/allcategory"
+                                            />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:textAlignment="center"
+                                    android:fontFamily="sans-serif"
+                                    android:text="View All"
+                                    android:textColor="@color/black"
+                                    />
+                        </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="fillers1"
-                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-                    android:textSize="16sp"
+                    android:text="Ways to Save through Uber"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:layout_margin="30dp"
+                    android:layout_margin="20dp"
                     />
 
                 <HorizontalScrollView
@@ -127,30 +186,119 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
 
-                                <ImageView
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image1" />
+                                </androidx.cardview.widget.CardView>
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="sans-serif"
+                                            android:text="Public transit"
+                                            />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="140dp"
+                                    android:layout_height="70dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
 
                                 <ImageView
-                                    android:layout_width="140dp"
-                                    android:layout_height="100dp"
-                                    android:layout_margin="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:src="@drawable/image2" />
+                                </androidx.cardview.widget.CardView>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="sans"
+                                            android:text="Choose Your \nDestination"
+                                            />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="140dp"
+                                    android:layout_height="70dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
 
                                 <ImageView
-                                    android:layout_width="140dp"
-                                    android:layout_height="100dp"
-                                    android:layout_margin="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image3" />
+                                </androidx.cardview.widget.CardView>
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="sans-serif"
+                                            android:text="Uber Moto Rides"
+                                            />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="140dp"
+                                    android:layout_height="70dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
 
                                 <ImageView
-                                    android:layout_width="140dp"
-                                    android:layout_height="100dp"
-                                    android:layout_margin="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image9" />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Any Ride with Uber"
+                                    />
+
+                        </LinearLayout>
+
+
                         </LinearLayout>
 
 
@@ -159,11 +307,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="fillers2"
-                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-                    android:textSize="16sp"
+                    android:text="Ways To Plan with Uber"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:layout_margin="30dp"
+                    android:layout_margin="20dp"
                     />
 
 
@@ -178,29 +326,116 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                                <ImageView
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image4" />
+                                </androidx.cardview.widget.CardView>
 
-                                <ImageView
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="15dp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="sans-serif"
+                                            android:text="Auto Trips"
+                                            />
+
+                                </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image5" />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="InterCity Rides"
+                                    />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="140dp"
+                                    android:layout_height="70dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
 
                                 <ImageView
-                                    android:layout_width="140dp"
-                                    android:layout_height="100dp"
-                                    android:layout_margin="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:src="@drawable/image6" />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="For XL Group Rides"
+                                    />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="140dp"
+                                    android:layout_height="70dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
 
                                 <ImageView
-                                    android:layout_width="140dp"
-                                    android:layout_height="100dp"
-                                    android:layout_margin="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image9" />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Confused? Try Uber"
+                                    />
+
+                        </LinearLayout>
+
                         </LinearLayout>
 
 
@@ -209,11 +444,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="fillers3"
-                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-                    android:textSize="16sp"
+                    android:text="More Ways to use Uber"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:layout_margin="30dp"
+                    android:layout_margin="20dp"
                     />
 
                 <HorizontalScrollView
@@ -225,30 +460,123 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                                <ImageView
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image10"
                                     />
-                                <ImageView
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Hourly Rentals/Rides"
+                                    />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image8"
                                     />
-                                <ImageView
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Economically Better"
+                                    />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image7"
                                     />
-                                <ImageView
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Transport Package"
+                                    />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="140dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="70dp"
                                     android:layout_margin="10dp"
+                                    android:background="@drawable/image"
+                                    >
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/image9"
                                     />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="15dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Still Waiting? \nBook Now..."
+                                    />
+
+                        </LinearLayout>
+
+
+
                         </LinearLayout>
 
 
@@ -258,8 +586,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="AROUND YOU"
-                    android:fontFamily="@font/alegreya_sans_sc_bold_italic"
-                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_margin="30dp"
                     />
