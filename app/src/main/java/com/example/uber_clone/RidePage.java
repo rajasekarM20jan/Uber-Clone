@@ -239,7 +239,13 @@ public class RidePage extends AppCompatActivity {
                                         if(p.isShowing()){
                                             p.dismiss();
                                         }
-                                        getStatus();
+                                        Handler h=new Handler();
+                                        h.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getStatus();
+                                            }
+                                        },20000);
                                     }
                                 });
                             }
@@ -285,7 +291,13 @@ public class RidePage extends AppCompatActivity {
                                         if(p.isShowing()){
                                             p.dismiss();
                                         }
-                                        getStatus();
+                                        Handler h=new Handler();
+                                        h.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getStatus();
+                                            }
+                                        },600000);
 
                                     }
                                 });
